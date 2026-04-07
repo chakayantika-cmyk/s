@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.env
+*.db
+.vite/
+.DS_Store
+.gemini/
+__pycache__/
+*.pyc
