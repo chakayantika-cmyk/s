@@ -173,8 +173,7 @@ function App() {
   const [walletAddress, setWalletAddress] = useState('');
   
   const [activeTab, setActiveTab] = useState('login'); // login, register
-  const [dashboardTab, setDashboardTab] = useState('apply'); // apply, fund
-  
+  const [dashboardTab, setDashboardTab] = useState('apply'); // apply, fund, ..., about
   const [formData, setFormData] = useState({ 
     uid: '', 
     password: '', 
@@ -790,6 +789,7 @@ function App() {
             <button className={`tab-btn ${dashboardTab === 'direct' ? 'active' : ''}`} onClick={() => setDashboardTab('direct')}>Direct Payment</button>
             <button className={`tab-btn ${dashboardTab === 'advanced' ? 'active' : ''}`} onClick={() => setDashboardTab('advanced')}>Advanced Features</button>
             <button className={`tab-btn ${dashboardTab === 'help' ? 'active' : ''}`} onClick={() => setDashboardTab('help')}>Help & Support</button>
+            <button className={`tab-btn ${dashboardTab === 'about' ? 'active' : ''}`} onClick={() => setDashboardTab('about')}>About Us</button>
           </div>
 
           {dashboardTab === 'apply' && (
@@ -951,7 +951,7 @@ function App() {
                   applications.map((app) => (
                     <div key={app.id} className="glass-card application-card">
                       <div className="user-profile-header">
-                        <img src={generateAvatar(app.name || app.uid)} alt="Student Avatar" className="user-avatar" />
+                        <img src={app.student_real_pic || generateAvatar(app.name || app.uid)} alt="Student Avatar" className="user-avatar" />
                         <div style={{ flex: 1 }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                             <h4 className="user-name">{app.name || app.uid}</h4>
@@ -975,9 +975,43 @@ function App() {
                       </div>
 
                       <div style={{ marginBottom: '1rem', display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                        {app.parent_income && <span className="method-badge" style={{ fontSize: '0.7rem' }}>Income: ₹{app.parent_income}</span>}
-                        {app.marks_10th && <span className="method-badge" style={{ fontSize: '0.7rem', background: 'rgba(52, 211, 153, 0.1)', color: '#34d399' }}>10th Verified</span>}
-                        {app.marks_12th && <span className="method-badge" style={{ fontSize: '0.7rem', background: 'rgba(52, 211, 153, 0.1)', color: '#34d399' }}>12th Verified</span>}
+                        <span className="method-badge" style={{ fontSize: '0.7rem' }}>Income: ₹{app.parent_income}</span>
+                        {app.marks_10th && (
+                            <button 
+                                onClick={() => {
+                                    const win = window.open();
+                                    win.document.write(`<iframe src="${app.marks_10th}" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>`);
+                                }}
+                                className="method-badge" 
+                                style={{ fontSize: '0.7rem', background: 'rgba(52, 211, 153, 0.1)', color: '#34d399', border: 'none', cursor: 'pointer' }}
+                            >
+                                View 10th Marks
+                            </button>
+                        )}
+                        {app.marks_12th && (
+                            <button 
+                                onClick={() => {
+                                    const win = window.open();
+                                    win.document.write(`<iframe src="${app.marks_12th}" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>`);
+                                }}
+                                className="method-badge" 
+                                style={{ fontSize: '0.7rem', background: 'rgba(52, 211, 153, 0.1)', color: '#34d399', border: 'none', cursor: 'pointer' }}
+                            >
+                                View 12th Marks
+                            </button>
+                        )}
+                        {app.income_cert && (
+                            <button 
+                                onClick={() => {
+                                    const win = window.open();
+                                    win.document.write(`<iframe src="${app.income_cert}" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>`);
+                                }}
+                                className="method-badge" 
+                                style={{ fontSize: '0.7rem', background: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b', border: 'none', cursor: 'pointer' }}
+                            >
+                                Income Cert
+                            </button>
+                        )}
                       </div>
                       
                       <div className="reason-quote">
@@ -1030,7 +1064,7 @@ function App() {
                   applications.filter(app => app.funded_by === user?.uid).map((app) => (
                     <div key={app.id} className="glass-card application-card" style={{ border: '1px solid rgba(16, 185, 129, 0.3)' }}>
                       <div className="user-profile-header">
-                        <img src={generateAvatar(app.name || app.uid)} alt="Student Avatar" className="user-avatar" />
+                        <img src={app.student_real_pic || generateAvatar(app.name || app.uid)} alt="Student Avatar" className="user-avatar" />
                         <div style={{ flex: 1 }}>
                           <h4 className="user-name">{app.name || app.uid}</h4>
                           <div className="user-uid">Student UID: {app.uid}</div>
@@ -1180,6 +1214,53 @@ function App() {
 
           {dashboardTab === 'help' && (
             <HelpSection />
+          )}
+
+          {dashboardTab === 'about' && (
+            <div style={{ animation: 'fadeIn 0.6s ease-out', maxWidth: '800px', margin: '0 auto' }}>
+                <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+                    <h2 className="hero-title" style={{ fontSize: '2.8rem', marginBottom: '1rem' }}>
+                        Empowering <span style={{ color: 'var(--accent-primary)' }}>Futures</span>
+                    </h2>
+                    <p className="hero-subtitle">ScholarChain is more than a platform; it's a movement to decentralize opportunity and ensure that every student's potential is unlocked by the collective generosity of a global community.</p>
+                </div>
+
+                <div className="dashboard-grid" style={{ gridTemplateColumns: '1fr 1fr', gap: '2rem', marginBottom: '3rem' }}>
+                    <div className="glass-card" style={{ padding: '2rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.2rem', color: 'var(--accent-primary)' }}>
+                            <ShieldCheck size={28} />
+                            <h3 style={{ fontSize: '1.4rem' }}>Our Mission</h3>
+                        </div>
+                        <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6', fontSize: '0.95rem' }}>
+                            We aim to eliminate the middlemen and bureaucracies that often stand between donors and deserving students. By leveraging Ethereum's Sepolia network, we provide a 1:1 direct funding model that is transparent, immutable, and 100% secure.
+                        </p>
+                    </div>
+
+                    <div className="glass-card" style={{ padding: '2rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.2rem', color: 'var(--accent-secondary)' }}>
+                            <GraduationCap size={28} />
+                            <h3 style={{ fontSize: '1.4rem' }}>The Vision</h3>
+                        </div>
+                        <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6', fontSize: '0.95rem' }}>
+                            Every student deserves an education, regardless of financial barriers. ScholarChain envisions a world where a student's dedication is the only factor in their career growth, supported by a blockchain-verified registry of scholarship and impact.
+                        </p>
+                    </div>
+                </div>
+
+                <div className="glass-card" style={{ padding: '2.5rem', textAlign: 'center', background: 'linear-gradient(135deg, rgba(3, 125, 214, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%)' }}>
+                    <h3 style={{ marginBottom: '1.5rem', fontSize: '1.6rem' }}>Meet Our Visionaries</h3>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem' }}>
+                        {['Ayantika Chakraborty', 'Riddhima Dutta', 'Ayantika Ghosal', 'Lakshmee Kumari', 'Mrinal Kanti Pakhira', 'Arijit Pal'].map(name => (
+                            <div key={name} style={{ background: 'var(--surface-secondary)', padding: '0.6rem 1.2rem', borderRadius: '12px', border: '1px solid var(--border-color)', fontSize: '0.9rem', fontWeight: 600 }}>
+                                {name}
+                            </div>
+                        ))}
+                    </div>
+                    <p style={{ marginTop: '1.5rem', color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
+                        United by a passion for technology and social impact, we built ScholarChain to demonstrate how Web3 can solve real-world problems in the education sector.
+                    </p>
+                </div>
+            </div>
           )}
         </div>
       )}

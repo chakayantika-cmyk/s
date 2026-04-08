@@ -61,7 +61,7 @@ const HelpChatbot = () => {
       } else if (lowerInput.includes('hi') || lowerInput.includes('hello') || lowerInput.includes('hey')) {
         response = "Hello! I'm your ScholarChain AI. I'm ready to help you navigate our decentralized scholarship platform. What would you like to explore first?";
       } else if (lowerInput.includes('who') || lowerInput.includes('what is this') || lowerInput.includes('about')) {
-        response = "ScholarChain is a next-generation platform for education funding. We use blockchain to eliminate administrative overhead, ensuring 100% of donor funds reach students. It's direct, transparent, and secure.";
+        response = "ScholarChain is a next-generation platform for education funding. We use blockchain to ensure 100% of donor funds reach students directly. You can meet our visionary team and learn about our mission in the 'About Us' tab right next to the Help section!";
       } else if (lowerInput.includes('error') || lowerInput.includes('fail') || lowerInput.includes('not working')) {
         response = "I'm sorry you're having trouble. Most issues are related to MetaMask not being on the Sepolia network or having insufficient test ETH. Check your wallet status in the header!";
       }
